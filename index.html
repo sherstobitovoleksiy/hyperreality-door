@@ -49,6 +49,14 @@ footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 <a class="btn" href="https://drive.google.com/file/d/1Th5CRrPQ3BdBu128k7Ft4S8RjbSOKsdDo_Vr5UkLtqQ/view">ИНДЕКС ДОКАЗАТЕЛЬСТВ · CASE 14029981</a>
 <a class="btn" href="https://drive.google.com/file/d/1id_qUfHH-uwNUt2YmyxX5OJDrrC8Db7LmmuHYeHX-Xo/view">РЕЕСТР СОБЫТИЙ · OPENAI × FALCON</a>
 <a class="btn" href="https://xugmijuwrntoquoxywaa.supabase.co/functions/v1/falcon-connect?operation=publish.status">ЖИВОЕ СЕРДЦЕ · СТАТУС ПУБЛИКАЦИИ</a>
+<div style="border-top:1px solid #2a2518;margin-top:28px;padding-top:20px">
+<p class="gold">СМЕНИТЬ КОДОВОЕ СЛОВО</p>
+<p class="small">Новое слово: не короче 8 знаков, запиши его себе сразу. После смены старое работать перестанет.</p>
+<input id="oldw" type="password" placeholder="старое слово">
+<input id="neww" type="password" placeholder="новое слово">
+<input id="neww2" type="password" placeholder="новое слово ещё раз">
+<button class="btn" onclick="changeWord()">СМЕНИТЬ СЛОВО</button>
+</div>
 <button class="btn" onclick="closeZone()">ЗАКРЫТЬ ЛИЧНОЕ НА ЭТОМ УСТРОЙСТВЕ</button>
 </div>
 </div>
@@ -60,7 +68,7 @@ footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 var SUPA_URL = "https://xugmijuwrntoquoxywaa.supabase.co";
 var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1Z21panV3cm50b3F1b3h5d2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1MDU4ODYsImV4cCI6MjA5ODA4MTg4Nn0.6gjzFgJAPKhMjbNrPa0QE2v74PW4gDWBbXbXqHiB5eY";
 var cl = window.supabase ? window.supabase.createClient(SUPA_URL, SUPA_KEY) : null;
-var WORD_HASH = "3a3daad118816c2817ffff4f4205dbc8237d95f6aedf0486d36103afabc70f22";
+var DOOR = "3a3daad118816c2817ffff4f4205dbc8237d95f6aedf0486d36103afabc70f22";
 function msg(t) { document.getElementById("msg").textContent = t; }
 function openZone() {
   document.getElementById("zone").style.display = "block";
@@ -71,6 +79,13 @@ function openZone() {
   msg("");
 }
 function closeZone() { localStorage.removeItem("falcon_door"); location.reload(); }
+async function loadDoor() {
+  if (!cl) return;
+  try {
+    var r = await cl.from("falcon_door").select("door_hash").eq("id", 1).single();
+    if (r && r.data && r.data.door_hash) { DOOR = r.data.door_hash; }
+  } catch (e) {}
+}
 async function sendCode() {
   if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
   var m = String(document.getElementById("mail").value || "").trim();
@@ -107,10 +122,38 @@ async function checkWord() {
   msg("Проверяю слово...");
   try {
     var h = await sha256hex(w);
-    if (h === WORD_HASH) { localStorage.setItem("falcon_door", "1"); openZone(); return; }
+    if (h === DOOR) { localStorage.setItem("falcon_door", "1"); openZone(); return; }
     msg("Слово не подошло. Проверь раскладку клавиатуры и напиши без пробелов.");
   } catch (e) { msg("Похоже на сеть: " + String(e)); }
 }
+async function changeWord() {
+  if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
+  var o = String(document.getElementById("oldw").value || "").trim();
+  var n = String(document.getElementById("neww").value || "").trim();
+  var n2 = String(document.getElementById("neww2").value || "").trim();
+  if (!o || !n) { msg("Заполни старое и новое слово."); return; }
+  if (n.length < 8) { msg("Новое слово короче 8 знаков — придумай длиннее."); return; }
+  if (n !== n2) { msg("Новые слова не совпали — проверь опечатки."); return; }
+  if (n === o) { msg("Новое слово то же самое."); return; }
+  msg("Меняю слово...");
+  try {
+    var ho = await sha256hex(o);
+    var hn = await sha256hex(n);
+    var r = await cl.rpc("falcon_door_change", { p_old: ho, p_new: hn });
+    if (r && r.error) { msg("Контур не пустил: " + r.error.message); return; }
+    var d = r.data;
+    if (d && d.ok) {
+      DOOR = hn;
+      document.getElementById("oldw").value = "";
+      document.getElementById("neww").value = "";
+      document.getElementById("neww2").value = "";
+      msg("Слово обновлено. Запиши новое себе в заметки — старое больше не работает.");
+    } else {
+      msg((d && d.err) || "Не обновилось. Проверь старое слово.");
+    }
+  } catch (e) { msg("Похоже на сеть: " + String(e)); }
+}
+loadDoor();
 if (localStorage.getItem("falcon_door") === "1") { openZone(); }
 </script>
 </body>
