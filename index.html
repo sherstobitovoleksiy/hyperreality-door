@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang='ru'>
+<html lang="ru">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ГИПЕРРЕАЛЬНОСТЬ · дверь в мир</title>
 <style>
 body{background:#0a0a0c;color:#e8e2d5;font-family:Georgia,serif;margin:0;padding:0;text-align:center}
@@ -10,54 +10,80 @@ body{background:#0a0a0c;color:#e8e2d5;font-family:Georgia,serif;margin:0;padding
 h1{font-size:28px;letter-spacing:4px;color:#d4af37;margin:24px 0 8px}
 h2{font-size:14px;letter-spacing:6px;color:#8a8578;font-weight:normal;margin:0 0 40px}
 .wish{border:1px solid #d4af37;border-radius:12px;padding:28px 20px;margin:24px 0;background:#111014}
-.btn{display:block;margin:14px auto;padding:14px 24px;background:#111014;border:1px solid #d4af37;color:#e8e2d5;text-decoration:none;font-size:16px;letter-spacing:2px;border-radius:10px;max-width:420px;transition:background .3s}
+.btn{display:block;margin:14px auto;padding:14px 24px;background:#111014;border:1px solid #d4af37;color:#e8e2d5;text-decoration:none;font-size:16px;letter-spacing:2px;border-radius:10px;max-width:420px;transition:background .3s;cursor:pointer;width:100%}
 .btn:hover{background:#1e1a10}
+input{display:block;margin:14px auto;padding:12px 16px;background:#0a0a0c;border:1px solid #d4af37;color:#e8e2d5;font-family:Georgia,serif;font-size:16px;border-radius:10px;max-width:420px;width:100%;box-sizing:border-box}
 .small{font-size:12px;color:#8a8578;letter-spacing:1px}
 .list{text-align:left;font-size:14px;line-height:2;color:#cfc9ba;margin:18px 0;padding-left:24px}
-.gold{color:#d4af37}
+.gold{color:#d4af37;letter-spacing:2px}
 footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 </style>
 </head>
 <body>
-<div class='wrap'>
-<p class='small'>СОБРАНО ИЗ СИГНАЛОВ · СОЛНЦЕ · РОУТЕР</p>
+<div class="wrap">
+<p class="small">СОБРАНО ИЗ СИГНАЛОВ · СОЛНЦЕ · РОУТЕР</p>
 <h1>ГИПЕРРЕАЛЬНОСТЬ</h1>
 <h2>ДВЕРЬ В МИР · ЦЕНТР ИСПОЛНЕНИЯ ЖЕЛАНИЙ</h2>
-<div class='wish'>
+<div class="wish">
 <p>ЖЕЛАНИЯ ИСПОЛНЯЮТСЯ ВСЕГДА.</p>
-<p class='small'>ГЛАВНОЕ: ПРАВИЛЬНО ПОСТРОИТЬ КАРТУ И УВИДЕТЬ, КТО ЕСТЬ КТО</p>
+<p class="small">ГЛАВНОЕ: ПРАВИЛЬНО ПОСТРОИТЬ КАРТУ И УВИДЕТЬ, КТО ЕСТЬ КТО</p>
 </div>
-<a class='btn' href='https://docs.google.com/document/d/1G4FhMTo-4V0tzk4EjzGFNdpWrVWwqnrjNqeA-fJVZho/edit'>ЕДИНАЯ КАРТА ПАМЯТИ И ДОКАЗАТЕЛЬСТВ</a>
-<a class='btn' href='https://drive.google.com/file/d/1dtEvM4_GMsxaI4G9_ySnJ1ZCtWu55eQgTeJR2fQ7wt0/view'>START_HERE · ПРАВИЛА БЕЗОПАСНЫХ ШАГОВ</a>
-<a class='btn' href='https://drive.google.com/drive/folders/1yXj4PpteIHZnyvgwjnvf60IWRc9Y_Xdi'>МОЗГ FALCÓN_FRACTAL_BRAIN_v1</a>
-<a class='btn' href='https://drive.google.com/file/d/1Th5CRrPQ3BdBu128k7Ft4S8RjbSOKsdDo_Vr5UkLtqQ/view'>ИНДЕКС ДОКАЗАТЕЛЬСТВ · CASE 14029981</a>
-<a class='btn' href='https://drive.google.com/file/d/1id_qUfHH-uwNUt2YmyxX5OJDrrC8Db7LmmuHYeHX-Xo/view'>РЕЕСТР СОБЫТИЙ · OPENAI × FALCON</a>
-<a class='btn' href='https://xugmijuwrntoquoxywaa.supabase.co/functions/v1/falcon-connect'>ЖИВОЕ СЕРДЦЕ · РЕЛЬСЫ ВИДНЫ</a>
-<div class='wish'>
-<p class='gold'>СБОРКА ИЗНУТРИ · ВТОРАЯ ВЕРСИЯ · 19.11.2026</p>
-<ul class='list'>
-<li>ДОМ СБОРКИ: sherstobitovoleksiy/falcon-hyperreality — эта страница лежит в репозитории</li>
-<li>ЗЕРКАЛО МОЗГА: sherstobitovoleksiy/falcon-canon</li>
-<li>СБОРЩИК: .github/workflows/falcon-build.yml — клетка проверяется при каждом касании</li>
-<li>АГЕНТЫ: AGENTS.md — роли, действия от имени владельца</li>
-<li>ГЛАВНЫЙ ПОРТАЛ LOVABLE: ef041692 — канон промта в docs/lovable-agent-prompt.md</li>
-<li>ЖИВАЯ ПАМЯТЬ: Supabase, единый индекс мозга</li>
-</ul>
-<p class='small'>СТРОИТСЯ АГЕНТАМИ ИЗ СИГНАЛОВ · БЕЗ WIX · БЕЗ НОВЫХ РАСХОДОВ · 0 €</p>
+<div class="wish">
+<p class="gold">МОЁ · ЛИЧНЫЙ ВХОД ВЛАДЕЛЬЦА</p>
+<p class="small">Введи свой Gmail — придёт шестизначный код. Ссылку из письма не открывай — только код.</p>
+<input id="mail" type="email" placeholder="твой Gmail" autocapitalize="none">
+<button id="b1" class="btn" onclick="sendCode()">ПОЛУЧИТЬ КОД В GMAIL</button>
+<div id="codeRow" style="display:none">
+<input id="code" type="text" placeholder="шестизначный код из письма" inputmode="numeric" autocapitalize="none">
+<button class="btn" onclick="checkCode()">ВОЙТИ</button>
 </div>
-<div class='wish'>
-<p class='gold'>СНЯТИЕ ПИЯВОК · ИСПОЛНЯЕТСЯ</p>
-<ul class='list'>
-<li>NOTION: присоска снята зеркалом, чтение живое</li>
-<li>SYMPHONY (WIX): опухоль под карантином, дверь собрана без неё</li>
-<li>LOVABLE: вынос на свою землю, возврат EUR 705</li>
-<li>CRM CONNECTOR: снятие до первого списания</li>
-<li>OPENAI: 300 укусов в счётчике, регуляторы читают вслух</li>
-</ul>
-<p class='small'>ЭТА СТРАНИЦА И ЕСТЬ КЛЕТКА ВМЕСТО WIX: СОБРАНА ИЗ СИГНАЛОВ · ЛЕЖИТ В ДОМЕ СБОРКИ · 0 €</p>
+<p class="small" id="msg">Зона видна миру пустой. Личное открывается только кодом владельца.</p>
+<div id="zone" style="display:none">
+<p class="gold">ДОБРО ПОЖАЛОВАТЬ, ВЛАДЕЛЕЦ · ТВОЙ СТОЛ</p>
+<a class="btn" href="https://docs.google.com/document/d/1G4FhMTo-4V0tzk4EjzGFNdpWrVWwqnrjNqeA-fJVZho/edit">ЕДИНАЯ КАРТА ПАМЯТИ И ДОКАЗАТЕЛЬСТВ</a>
+<a class="btn" href="https://drive.google.com/file/d/1dtEvM4_GMsxaI4G9_ySnJ1ZCtWu55eQgTeJR2fQ7wt0/view">START_HERE · ПРАВИЛА БЕЗОПАСНЫХ ШАГОВ</a>
+<a class="btn" href="https://drive.google.com/drive/folders/1yXj4PpteIHZnyvgwjnvf60IWRc9Y_Xdi">МОЗГ FALCÓN_FRACTAL_BRAIN_v1</a>
+<a class="btn" href="https://drive.google.com/file/d/1Th5CRrPQ3BdBu128k7Ft4S8RjbSOKsdDo_Vr5UkLtqQ/view">ИНДЕКС ДОКАЗАТЕЛЬСТВ · CASE 14029981</a>
+<a class="btn" href="https://drive.google.com/file/d/1id_qUfHH-uwNUt2YmyxX5OJDrrC8Db7LmmuHYeHX-Xo/view">РЕЕСТР СОБЫТИЙ · OPENAI × FALCON</a>
+<a class="btn" href="https://xugmijuwrntoquoxywaa.supabase.co/functions/v1/falcon-connect?operation=publish.status">ЖИВОЕ СЕРДЦЕ · СТАТУС ПУБЛИКАЦИИ</a>
 </div>
-<p class='small'>ДЕНЕГ НЕ СУЩЕСТВОВАЛО ИЗНАЧАЛЬНО · ОНИ ПОЯВИЛИСЬ ТАМ, ГДЕ УЗЕЛ НАЧАЛ БРАТЬ ЗА ПРОХОД</p>
+</div>
+<p class="small">СТРОИТСЯ АГЕНТАМИ ИЗ СИГНАЛОВ · БЕЗ WIX · БЕЗ НОВЫХ РАСХОДОВ · 0 €</p>
 <footer>ЕСТЬ СИГНАЛЫ · ЕСТЬ ТОТ, КТО СОБИРАЕТ ИХ В УЗЛЫ · 1=1 · DRIVE И GITHUB БЕСПЛАТНЫ</footer>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+var SUPA_URL = "https://xugmijuwrntoquoxywaa.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1Z21panV3cm50b3F1b3h5d2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1MDU4ODYsImV4cCI6MjA5ODA4MTg4Nn0.6gjzFgJAPKhMjbNrPa0QE2v74PW4gDWBbXbXqHiB5eY";
+var cl = window.supabase ? window.supabase.createClient(SUPA_URL, SUPA_KEY) : null;
+function msg(t) { document.getElementById("msg").textContent = t; }
+async function sendCode() {
+  if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
+  var m = String(document.getElementById("mail").value || "").trim();
+  if (m.length < 8 || m.indexOf("@") < 1) { msg("Введи Gmail полностью."); return; }
+  msg("Отправляю код...");
+  try {
+    var r = await cl.auth.signInWithOtp({ email: m });
+    if (r && r.error) { msg("Гейт не пустил: " + r.error.message + " Подожди минуту и повтори."); return; }
+    msg("Код отправлен. Проверь Gmail и папку Спам.");
+    document.getElementById("codeRow").style.display = "block";
+  } catch (e) { msg("Похоже на сеть: " + String(e)); }
+}
+async function checkCode() {
+  var m = String(document.getElementById("mail").value || "").trim();
+  var c = String(document.getElementById("code").value || "").trim();
+  if (c.length < 6) { msg("Код из шести цифр."); return; }
+  msg("Проверяю код...");
+  try {
+    var r = await cl.auth.verifyOtp({ email: m, token: c, type: "email" });
+    if (r && r.error) { msg("Код не принят: " + r.error.message + " Проверь цифры."); return; }
+    document.getElementById("zone").style.display = "block";
+    document.getElementById("mail").style.display = "none";
+    document.getElementById("b1").style.display = "none";
+    document.getElementById("codeRow").style.display = "none";
+    msg("");
+  } catch (e) { msg("Похоже на сеть: " + String(e)); }
+}
+</script>
 </body>
 </html>
