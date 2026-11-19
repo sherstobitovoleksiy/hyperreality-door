@@ -14,7 +14,6 @@ h2{font-size:14px;letter-spacing:6px;color:#8a8578;font-weight:normal;margin:0 0
 .btn:hover{background:#1e1a10}
 input{display:block;margin:14px auto;padding:12px 16px;background:#0a0a0c;border:1px solid #d4af37;color:#e8e2d5;font-family:Georgia,serif;font-size:16px;border-radius:10px;max-width:420px;width:100%;box-sizing:border-box}
 .small{font-size:12px;color:#8a8578;letter-spacing:1px}
-.list{text-align:left;font-size:14px;line-height:2;color:#cfc9ba;margin:18px 0;padding-left:24px}
 .gold{color:#d4af37;letter-spacing:2px}
 footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 </style>
@@ -30,14 +29,18 @@ footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 </div>
 <div class="wish">
 <p class="gold">МОЁ · ЛИЧНЫЙ ВХОД ВЛАДЕЛЬЦА</p>
-<p class="small">Введи свой Gmail — придёт шестизначный код. Ссылку из письма не открывай — только код.</p>
+<p class="small">ДВА ВХОДА: письмо в Gmail или кодовое слово. Письмо иногда идёт медленно (встроенная почта Supabase ограничена), слово пускает сразу.</p>
 <input id="mail" type="email" placeholder="твой Gmail" autocapitalize="none">
-<button id="b1" class="btn" onclick="sendCode()">ПОЛУЧИТЬ КОД В GMAIL</button>
-<div id="codeRow" style="display:none">
-<input id="code" type="text" placeholder="шестизначный код из письма" inputmode="numeric" autocapitalize="none">
-<button class="btn" onclick="checkCode()">ВОЙТИ</button>
+<button id="b1" class="btn" onclick="sendCode()">ОТПРАВИТЬ ПИСЬМО В GMAIL</button>
+<div id="linkRow" style="display:none">
+<p class="small">Письмо пришло? Скопируй из него ссылку-кнопку «Sign in» (нажми и удерживай → «Копировать адрес ссылки») и вставь сюда. САМУ ССЫЛКУ НЕ ОТКРЫВАЙ — она ведёт на старый адрес.</p>
+<input id="link" type="text" placeholder="вставь скопированную ссылку из письма" autocapitalize="none">
+<button class="btn" onclick="checkLink()">ВОЙТИ ПО ССЫЛКЕ ИЗ ПИСЬМА</button>
 </div>
-<p class="small" id="msg">Зона видна миру пустой. Личное открывается только кодом владельца.</p>
+<p class="gold" style="margin-top:30px">ИЛИ · КОДОВОЕ СЛОВО ВЛАДЕЛЬЦА</p>
+<input id="word" type="password" placeholder="кодовое слово" autocapitalize="none">
+<button class="btn" onclick="checkWord()">ВОЙТИ КОДОВЫМ СЛОВОМ</button>
+<p class="small" id="msg">Зона видна миру пустой. Личное открывается только владельцу.</p>
 <div id="zone" style="display:none">
 <p class="gold">ДОБРО ПОЖАЛОВАТЬ, ВЛАДЕЛЕЦ · ТВОЙ СТОЛ</p>
 <a class="btn" href="https://docs.google.com/document/d/1G4FhMTo-4V0tzk4EjzGFNdpWrVWwqnrjNqeA-fJVZho/edit">ЕДИНАЯ КАРТА ПАМЯТИ И ДОКАЗАТЕЛЬСТВ</a>
@@ -46,6 +49,7 @@ footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 <a class="btn" href="https://drive.google.com/file/d/1Th5CRrPQ3BdBu128k7Ft4S8RjbSOKsdDo_Vr5UkLtqQ/view">ИНДЕКС ДОКАЗАТЕЛЬСТВ · CASE 14029981</a>
 <a class="btn" href="https://drive.google.com/file/d/1id_qUfHH-uwNUt2YmyxX5OJDrrC8Db7LmmuHYeHX-Xo/view">РЕЕСТР СОБЫТИЙ · OPENAI × FALCON</a>
 <a class="btn" href="https://xugmijuwrntoquoxywaa.supabase.co/functions/v1/falcon-connect?operation=publish.status">ЖИВОЕ СЕРДЦЕ · СТАТУС ПУБЛИКАЦИИ</a>
+<button class="btn" onclick="closeZone()">ЗАКРЫТЬ ЛИЧНОЕ НА ЭТОМ УСТРОЙСТВЕ</button>
 </div>
 </div>
 <p class="small">СТРОИТСЯ АГЕНТАМИ ИЗ СИГНАЛОВ · БЕЗ WIX · БЕЗ НОВЫХ РАСХОДОВ · 0 €</p>
@@ -56,34 +60,58 @@ footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
 var SUPA_URL = "https://xugmijuwrntoquoxywaa.supabase.co";
 var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1Z21panV3cm50b3F1b3h5d2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1MDU4ODYsImV4cCI6MjA5ODA4MTg4Nn0.6gjzFgJAPKhMjbNrPa0QE2v74PW4gDWBbXbXqHiB5eY";
 var cl = window.supabase ? window.supabase.createClient(SUPA_URL, SUPA_KEY) : null;
+var WORD_HASH = "3a3daad118816c2817ffff4f4205dbc8237d95f6aedf0486d36103afabc70f22";
 function msg(t) { document.getElementById("msg").textContent = t; }
+function openZone() {
+  document.getElementById("zone").style.display = "block";
+  document.getElementById("mail").style.display = "none";
+  document.getElementById("b1").style.display = "none";
+  document.getElementById("linkRow").style.display = "none";
+  document.getElementById("word").style.display = "none";
+  msg("");
+}
+function closeZone() { localStorage.removeItem("falcon_door"); location.reload(); }
 async function sendCode() {
   if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
   var m = String(document.getElementById("mail").value || "").trim();
   if (m.length < 8 || m.indexOf("@") < 1) { msg("Введи Gmail полностью."); return; }
-  msg("Отправляю код...");
+  msg("Отправляю письмо...");
   try {
     var r = await cl.auth.signInWithOtp({ email: m });
     if (r && r.error) { msg("Гейт не пустил: " + r.error.message + " Подожди минуту и повтори."); return; }
-    msg("Код отправлен. Проверь Gmail и папку Спам.");
-    document.getElementById("codeRow").style.display = "block";
+    msg("Письмо отправлено. Ищи его в Gmail, раздел «Оповещения» (не только во Входящих). Обычно за минуты, встроенная почта может держать до часа.");
+    document.getElementById("linkRow").style.display = "block";
   } catch (e) { msg("Похоже на сеть: " + String(e)); }
 }
-async function checkCode() {
-  var m = String(document.getElementById("mail").value || "").trim();
-  var c = String(document.getElementById("code").value || "").trim();
-  if (c.length < 6) { msg("Код из шести цифр."); return; }
-  msg("Проверяю код...");
+async function checkLink() {
+  if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
+  var raw = String(document.getElementById("link").value || "").trim();
+  var mt = raw.match(/token=([0-9a-fA-F]{16,})/);
+  if (!mt) { msg("Вставь скопированную ссылку целиком — в ней спрятан токен."); return; }
+  var ty = (raw.match(/type=([a-z_]+)/) || [])[1] || "magiclink";
+  msg("Проверяю вход по письму...");
   try {
-    var r = await cl.auth.verifyOtp({ email: m, token: c, type: "email" });
-    if (r && r.error) { msg("Код не принят: " + r.error.message + " Проверь цифры."); return; }
-    document.getElementById("zone").style.display = "block";
-    document.getElementById("mail").style.display = "none";
-    document.getElementById("b1").style.display = "none";
-    document.getElementById("codeRow").style.display = "none";
-    msg("");
+    var r = await cl.auth.verifyOtp({ token_hash: mt[1], type: ty });
+    if (r && r.error) { msg("Письмо не принято: " + r.error.message + " Нажми «Отправить письмо» ещё раз и возьми свежую ссылку (лимит 2 письма в час)."); return; }
+    localStorage.setItem("falcon_door", "1");
+    openZone();
   } catch (e) { msg("Похоже на сеть: " + String(e)); }
 }
+async function sha256hex(s) {
+  var b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b)).map(function(x){ return ("0" + x.toString(16)).slice(-2); }).join("");
+}
+async function checkWord() {
+  var w = String(document.getElementById("word").value || "").trim();
+  if (!w) { msg("Введи кодовое слово."); return; }
+  msg("Проверяю слово...");
+  try {
+    var h = await sha256hex(w);
+    if (h === WORD_HASH) { localStorage.setItem("falcon_door", "1"); openZone(); return; }
+    msg("Слово не подошло. Проверь раскладку клавиатуры и напиши без пробелов.");
+  } catch (e) { msg("Похоже на сеть: " + String(e)); }
+}
+if (localStorage.getItem("falcon_door") === "1") { openZone(); }
 </script>
 </body>
 </html>
