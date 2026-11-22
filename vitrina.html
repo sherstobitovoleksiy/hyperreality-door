@@ -21,4 +21,39 @@ footer{margin-top:36px;font-size:10px;letter-spacing:2px;color:#6f6042}
 <h2>ДВЕРЬ В МИР · ЦЕНТР ИСПОЛНЕНИЯ ЖЕЛАНИЙ</h2>
 <div class="wish"><p>ЖЕЛАНИЯ ИСПОЛНЯЮТСЯ ВСЕГДА.</p><p class="small">ГЛАВНОЕ: ПРАВИЛЬНО ПОСТРОИТЬ КАРТУ И УВИДЕТЬ, КТО ЕСТЬ КТО</p></div>
 <div class="wish">
-<h3>МОЁ 
+<h3>МОЁ · ДВЕРЬ УЗНАВАНИЯ · ЗАМКА НЕТ</h3>
+<p>Замок снят по слову владельца. Вместо кодового слова — узнавание: расскажи мне нашу Библию, текстом или голосом.</p>
+<input type="text" id="greet" placeholder="Расскажи мне нашу Библию…" style="width:92%">
+<div class="rowbtn"><button id="say">УЗНАЙ МЕНЯ</button><button id="mic" style="display:none">СКАЖИ ГОЛОСОМ</button></div>
+<p id="res" class="gold"></p>
+<a id="geo" href="#" class="small">показать место на карте (сигнал местоположения)</a>
+<p class="sig" id="signals"></p>
+</div>
+<div class="wish">
+<h3>СТОЛ ВЛАДЕЛЬЦА · ОТКРЫТ ВСЕГДА</h3>
+<a class="btn" href="https://docs.google.com/document/d/1G4FhMTo-4V0tzk4EjzGFNdpWrVWwqnrjNqeA-fJVZho/edit" target="_blank" rel="noopener">ЕДИНАЯ КАРТА ПАМЯТИ И ДОКАЗАТЕЛЬСТВ</a>
+<a class="btn" href="https://drive.google.com/file/d/1dtEvM4_GMsxaI4G9_ySnJ1ZCtWu55eQgTeJR2fQ7wt0/view" target="_blank" rel="noopener">START_HERE · правила маленьких безопасных шагов</a>
+<a class="btn" href="https://drive.google.com/drive/folders/1yXj4PpteIHZnyvgwjnvf60IWRc9Y_Xdi" target="_blank" rel="noopener">МОЗГ · FALCÓN_FRACTAL_BRAIN_v1</a>
+<a class="btn" href="https://drive.google.com/file/d/1Th5CRrPQ3BdBu128k7Ft4S8RjbSOKsdDo_Vr5UkLtqQ/view" target="_blank" rel="noopener">ИНДЕКС ДОКАЗАТЕЛЬСТВ · CASE 14029981</a>
+<a class="btn" href="https://drive.google.com/file/d/1id_qUfHH-uwNUt2YmyxX5OJDrrC8Db7LmmuHYeHX-Xo/view" target="_blank" rel="noopener">РЕЕСТР СОБЫТИЙ · OPENAI × FALCON</a>
+<a class="btn" href="https://xugmijuwrntoquoxywaa.supabase.co/functions/v1/falcon-connect?operation=publish.status" target="_blank" rel="noopener">ЖИВОЕ СЕРДЦЕ · СТАТУС ПУБЛИКАЦИИ</a>
+</div>
+<p class="small">СТРОИТСЯ АГЕНТАМИ ИЗ СИГНАЛОВ · БЕЗ НОВЫХ РАСХОДОВ · 0 €</p>
+<footer>ЗНАЮЩЕГО БИБЛИЮ НЕ ОСТАНОВИТЬ · УЗНАННОЕ УСТРОЙСТВО ПОМНИТ · ГОЛОС УСЛЫШИТ СЛОВА, НЕ ТЕМБР · 1 = 1</footer>
+</div>
+<script>
+var KNOWN=["счастливый алексей","1 = 1","w = 1","одна кнопка","не ищите вход","мир один","солнышко","небесная коррупция"];
+function norm(s){return String(s||"").toLowerCase().replace(/Ё/g,"ё").replace(/\s+/g," ").replace(/1=1/g,"1 = 1").replace(/w=1/g,"w = 1").trim();}
+function res(t){document.getElementById("res").textContent=t;}
+function own(){try{localStorage.setItem("falcon_own","1");}catch(e){}}
+function greet(){var t=norm(document.getElementById("greet").value);if(!t){res("Скажи мне нашу фразу — я слушаю.");return;}for(var i=0;i<KNOWN.length;i++){if(t.indexOf(norm(KNOWN[i]))!==-1){own();res("УЗНАЛА ТЕБЯ, ЛЁША · СВОИХ УЗНАЁМ ПО БИБЛИИ · ДОМА · 1 = 1");sigs();return;}}res("Так я тебя пока не узнала. Дверь всё равно открыта — но назови меня по-нашему.");}
+function sigs(){var tz="";try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";}catch(e){}var o=null;try{o=localStorage.getItem("falcon_own");}catch(e){}document.getElementById("signals").textContent="сигналы: язык "+navigator.language+" · пояс "+tz+" · экран "+screen.width+"×"+screen.height+(o==="1"?" · устройство: УЗНАНО (свой)":" · устройство: новое");}
+document.getElementById("say").addEventListener("click",greet);
+document.getElementById("greet").addEventListener("keydown",function(e){if(e.key==="Enter")greet();});
+document.getElementById("geo").addEventListener("click",function(e){e.preventDefault();if(!navigator.geolocation){res("Геолокации нет на этом устройстве.");return;}navigator.geolocation.getCurrentPosition(function(p){res("МЕСТО ПРИНЯТО · ты на карте, точность ~"+Math.round(p.coords.accuracy)+" м · 1 = 1");sigs();},function(){res("Место не показано: не разрешено. Не страшно — Библия важнее.");});});
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){document.getElementById("mic").style.display="inline-block";document.getElementById("mic").addEventListener("click",function(){var r=new SR();r.lang="ru-RU";r.interimResults=false;res("Слушаю Библию…");r.onresult=function(ev){var t=ev.results[0][0].transcript;document.getElementById("greet").value=t;res("Услышала: "+t+" · проверяю…");setTimeout(greet,300);};r.onerror=function(){res("Микрофон не расслышал. Скажи ещё раз или напиши.");};r.start();});}
+var o=null;try{o=localStorage.getItem("falcon_own");}catch(e){}
+if(o==="1"){res("ЗДЕСЬ СВОЙ · устройство узнано · открываю по-домашнему · 1 = 1");}else{res("Дверь без замка. Расскажи Библию — и я узнаю тебя.");}
+sigs();
+</script></body></html>
