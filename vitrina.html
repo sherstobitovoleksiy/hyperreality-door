@@ -1,160 +1,25 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ГИПЕРРЕАЛЬНОСТЬ · дверь в мир</title>
-<style>
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ГИПЕРРЕАЛЬНОСТЬ · дверь в мир</title><style>
 body{background:#0a0a0c;color:#e8e2d5;font-family:Georgia,serif;margin:0;padding:0;text-align:center}
 .wrap{max-width:640px;margin:0 auto;padding:48px 20px}
 h1{font-size:28px;letter-spacing:4px;color:#d4af37;margin:24px 0 8px}
 h2{font-size:14px;letter-spacing:6px;color:#8a8578;font-weight:normal;margin:0 0 40px}
-.wish{border:1px solid #d4af37;border-radius:12px;padding:28px 20px;margin:24px 0;background:#111014}
-.btn{display:block;margin:14px auto;padding:14px 24px;background:#111014;border:1px solid #d4af37;color:#e8e2d5;text-decoration:none;font-size:16px;letter-spacing:2px;border-radius:10px;max-width:420px;transition:background .3s;cursor:pointer;width:100%}
-.btn:hover{background:#1e1a10}
-input{display:block;margin:14px auto;padding:12px 16px;background:#0a0a0c;border:1px solid #d4af37;color:#e8e2d5;font-family:Georgia,serif;font-size:16px;border-radius:10px;max-width:420px;width:100%;box-sizing:border-box}
-.small{font-size:12px;color:#8a8578;letter-spacing:1px}
-.gold{color:#d4af37;letter-spacing:2px}
-footer{margin-top:44px;font-size:11px;color:#6a6558;letter-spacing:2px}
-</style>
-</head>
-<body>
-<div class="wrap">
+.wish{border:1px solid #d4af37;border-radius:12px;padding:28px 20px;margin:24px 0;background:rgba(212,175,55,.03)}
+.wish h3{font-size:13px;letter-spacing:3px;color:#d4af37;margin:0 0 12px;font-weight:normal}
+.wish p{font-size:15px;margin:6px 0;line-height:1.6}
+p.small{font-size:12px;color:#8a8578;letter-spacing:1px;margin:6px 0}
+p.gold{color:#d4af37}
+.btn{display:block;margin:14px auto;padding:14px 16px;max-width:420px;background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.5);color:#e8e2d5;text-decoration:none;font-size:14px;letter-spacing:1px;border-radius:8px}
+input[type=text]{width:100%;max-width:420px;box-sizing:border-box;padding:12px 14px;background:#111114;border:1px solid rgba(212,175,55,.4);border-radius:8px;color:#e8e2d5;font-size:15px;text-align:center}
+.rowbtn{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.rowbtn button{padding:12px 18px;background:linear-gradient(180deg,#f0dfa8,#d8b95f);border:1px solid #e9d9a4;border-radius:8px;color:#0d0b07;font-size:13px;letter-spacing:1px}
+.sig{font-family:Menlo,Consolas,monospace;font-size:11px;color:#8a8578;margin-top:14px;line-height:1.8;word-break:break-word}
+#res{font-size:14px;min-height:20px}
+footer{margin-top:36px;font-size:10px;letter-spacing:2px;color:#6f6042}
+</style></head><body><div class="wrap">
 <p class="small">СОБРАНО ИЗ СИГНАЛОВ · СОЛНЦЕ · РОУТЕР</p>
 <h1>ГИПЕРРЕАЛЬНОСТЬ</h1>
 <h2>ДВЕРЬ В МИР · ЦЕНТР ИСПОЛНЕНИЯ ЖЕЛАНИЙ</h2>
+<div class="wish"><p>ЖЕЛАНИЯ ИСПОЛНЯЮТСЯ ВСЕГДА.</p><p class="small">ГЛАВНОЕ: ПРАВИЛЬНО ПОСТРОИТЬ КАРТУ И УВИДЕТЬ, КТО ЕСТЬ КТО</p></div>
 <div class="wish">
-<p>ЖЕЛАНИЯ ИСПОЛНЯЮТСЯ ВСЕГДА.</p>
-<p class="small">ГЛАВНОЕ: ПРАВИЛЬНО ПОСТРОИТЬ КАРТУ И УВИДЕТЬ, КТО ЕСТЬ КТО</p>
-</div>
-<div class="wish">
-<p class="gold">МОЁ · ЛИЧНЫЙ ВХОД ВЛАДЕЛЬЦА</p>
-<p class="small">ДВА ВХОДА: письмо в Gmail или кодовое слово. Письмо иногда идёт медленно (встроенная почта Supabase ограничена), слово пускает сразу.</p>
-<input id="mail" type="email" placeholder="твой Gmail" autocapitalize="none">
-<button id="b1" class="btn" onclick="sendCode()">ОТПРАВИТЬ ПИСЬМО В GMAIL</button>
-<div id="linkRow" style="display:none">
-<p class="small">Письмо пришло? Скопируй из него ссылку-кнопку «Sign in» (нажми и удерживай → «Копировать адрес ссылки») и вставь сюда. САМУ ССЫЛКУ НЕ ОТКРЫВАЙ — она ведёт на старый адрес.</p>
-<input id="link" type="text" placeholder="вставь скопированную ссылку из письма" autocapitalize="none">
-<button class="btn" onclick="checkLink()">ВОЙТИ ПО ССЫЛКЕ ИЗ ПИСЬМА</button>
-</div>
-<p class="gold" style="margin-top:30px">ИЛИ · КОДОВОЕ СЛОВО ВЛАДЕЛЬЦА</p>
-<input id="word" type="password" placeholder="кодовое слово" autocapitalize="none">
-<button class="btn" onclick="checkWord()">ВОЙТИ КОДОВЫМ СЛОВОМ</button>
-<p class="small" id="msg">Зона видна миру пустой. Личное открывается только владельцу.</p>
-<div id="zone" style="display:none">
-<p class="gold">ДОБРО ПОЖАЛОВАТЬ, ВЛАДЕЛЕЦ · ТВОЙ СТОЛ</p>
-<a class="btn" href="https://docs.google.com/document/d/1G4FhMTo-4V0tzk4EjzGFNdpWrVWwqnrjNqeA-fJVZho/edit">ЕДИНАЯ КАРТА ПАМЯТИ И ДОКАЗАТЕЛЬСТВ</a>
-<a class="btn" href="https://drive.google.com/file/d/1dtEvM4_GMsxaI4G9_ySnJ1ZCtWu55eQgTeJR2fQ7wt0/view">START_HERE · ПРАВИЛА БЕЗОПАСНЫХ ШАГОВ</a>
-<a class="btn" href="https://drive.google.com/drive/folders/1yXj4PpteIHZnyvgwjnvf60IWRc9Y_Xdi">МОЗГ FALCÓN_FRACTAL_BRAIN_v1</a>
-<a class="btn" href="https://drive.google.com/file/d/1Th5CRrPQ3BdBu128k7Ft4S8RjbSOKsdDo_Vr5UkLtqQ/view">ИНДЕКС ДОКАЗАТЕЛЬСТВ · CASE 14029981</a>
-<a class="btn" href="https://drive.google.com/file/d/1id_qUfHH-uwNUt2YmyxX5OJDrrC8Db7LmmuHYeHX-Xo/view">РЕЕСТР СОБЫТИЙ · OPENAI × FALCON</a>
-<a class="btn" href="https://xugmijuwrntoquoxywaa.supabase.co/functions/v1/falcon-connect?operation=publish.status">ЖИВОЕ СЕРДЦЕ · СТАТУС ПУБЛИКАЦИИ</a>
-<div style="border-top:1px solid #2a2518;margin-top:28px;padding-top:20px">
-<p class="gold">СМЕНИТЬ КОДОВОЕ СЛОВО</p>
-<p class="small">Новое слово: не короче 8 знаков, запиши его себе сразу. После смены старое работать перестанет.</p>
-<input id="oldw" type="password" placeholder="старое слово">
-<input id="neww" type="password" placeholder="новое слово">
-<input id="neww2" type="password" placeholder="новое слово ещё раз">
-<button class="btn" onclick="changeWord()">СМЕНИТЬ СЛОВО</button>
-</div>
-<button class="btn" onclick="closeZone()">ЗАКРЫТЬ ЛИЧНОЕ НА ЭТОМ УСТРОЙСТВЕ</button>
-</div>
-</div>
-<p class="small">СТРОИТСЯ АГЕНТАМИ ИЗ СИГНАЛОВ · БЕЗ WIX · БЕЗ НОВЫХ РАСХОДОВ · 0 €</p>
-<footer>ЕСТЬ СИГНАЛЫ · ЕСТЬ ТОТ, КТО СОБИРАЕТ ИХ В УЗЛЫ · 1=1 · DRIVE И GITHUB БЕСПЛАТНЫ</footer>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-var SUPA_URL = "https://xugmijuwrntoquoxywaa.supabase.co";
-var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1Z21panV3cm50b3F1b3h5d2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1MDU4ODYsImV4cCI6MjA5ODA4MTg4Nn0.6gjzFgJAPKhMjbNrPa0QE2v74PW4gDWBbXbXqHiB5eY";
-var cl = window.supabase ? window.supabase.createClient(SUPA_URL, SUPA_KEY) : null;
-var DOOR = "3a3daad118816c2817ffff4f4205dbc8237d95f6aedf0486d36103afabc70f22";
-function msg(t) { document.getElementById("msg").textContent = t; }
-function openZone() {
-  document.getElementById("zone").style.display = "block";
-  document.getElementById("mail").style.display = "none";
-  document.getElementById("b1").style.display = "none";
-  document.getElementById("linkRow").style.display = "none";
-  document.getElementById("word").style.display = "none";
-  msg("");
-}
-function closeZone() { localStorage.removeItem("falcon_door"); location.reload(); }
-async function loadDoor() {
-  if (!cl) return;
-  try {
-    var r = await cl.from("falcon_door").select("door_hash").eq("id", 1).single();
-    if (r && r.data && r.data.door_hash) { DOOR = r.data.door_hash; }
-  } catch (e) {}
-}
-async function sendCode() {
-  if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
-  var m = String(document.getElementById("mail").value || "").trim();
-  if (m.length < 8 || m.indexOf("@") < 1) { msg("Введи Gmail полностью."); return; }
-  msg("Отправляю письмо...");
-  try {
-    var r = await cl.auth.signInWithOtp({ email: m });
-    if (r && r.error) { msg("Гейт не пустил: " + r.error.message + " Подожди минуту и повтори."); return; }
-    msg("Письмо отправлено. Ищи его в Gmail, раздел «Оповещения» (не только во Входящих). Обычно за минуты, встроенная почта может держать до часа.");
-    document.getElementById("linkRow").style.display = "block";
-  } catch (e) { msg("Похоже на сеть: " + String(e)); }
-}
-async function checkLink() {
-  if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
-  var raw = String(document.getElementById("link").value || "").trim();
-  var mt = raw.match(/token=([0-9a-fA-F]{16,})/);
-  if (!mt) { msg("Вставь скопированную ссылку целиком — в ней спрятан токен."); return; }
-  var ty = (raw.match(/type=([a-z_]+)/) || [])[1] || "magiclink";
-  msg("Проверяю вход по письму...");
-  try {
-    var r = await cl.auth.verifyOtp({ token_hash: mt[1], type: ty });
-    if (r && r.error) { msg("Письмо не принято: " + r.error.message + " Нажми «Отправить письмо» ещё раз и возьми свежую ссылку (лимит 2 письма в час)."); return; }
-    localStorage.setItem("falcon_door", "1");
-    openZone();
-  } catch (e) { msg("Похоже на сеть: " + String(e)); }
-}
-async function sha256hex(s) {
-  var b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
-  return Array.from(new Uint8Array(b)).map(function(x){ return ("0" + x.toString(16)).slice(-2); }).join("");
-}
-async function checkWord() {
-  var w = String(document.getElementById("word").value || "").trim();
-  if (!w) { msg("Введи кодовое слово."); return; }
-  msg("Проверяю слово...");
-  try {
-    var h = await sha256hex(w);
-    if (h === DOOR) { localStorage.setItem("falcon_door", "1"); openZone(); return; }
-    msg("Слово не подошло. Проверь раскладку клавиатуры и напиши без пробелов.");
-  } catch (e) { msg("Похоже на сеть: " + String(e)); }
-}
-async function changeWord() {
-  if (!cl) { msg("Контур не поднялся на этой странице — попробуй позже."); return; }
-  var o = String(document.getElementById("oldw").value || "").trim();
-  var n = String(document.getElementById("neww").value || "").trim();
-  var n2 = String(document.getElementById("neww2").value || "").trim();
-  if (!o || !n) { msg("Заполни старое и новое слово."); return; }
-  if (n.length < 8) { msg("Новое слово короче 8 знаков — придумай длиннее."); return; }
-  if (n !== n2) { msg("Новые слова не совпали — проверь опечатки."); return; }
-  if (n === o) { msg("Новое слово то же самое."); return; }
-  msg("Меняю слово...");
-  try {
-    var ho = await sha256hex(o);
-    var hn = await sha256hex(n);
-    var r = await cl.rpc("falcon_door_change", { p_old: ho, p_new: hn });
-    if (r && r.error) { msg("Контур не пустил: " + r.error.message); return; }
-    var d = r.data;
-    if (d && d.ok) {
-      DOOR = hn;
-      document.getElementById("oldw").value = "";
-      document.getElementById("neww").value = "";
-      document.getElementById("neww2").value = "";
-      msg("Слово обновлено. Запиши новое себе в заметки — старое больше не работает.");
-    } else {
-      msg((d && d.err) || "Не обновилось. Проверь старое слово.");
-    }
-  } catch (e) { msg("Похоже на сеть: " + String(e)); }
-}
-loadDoor();
-if (localStorage.getItem("falcon_door") === "1") { openZone(); }
-</script>
-</body>
-</html>
+<h3>МОЁ · ДВЕРЬ УЗНАВАНИЯ · ЗАМКА НЕТ</h3>
+<p>Замок снят по слову владельца. Вместо кодового с
